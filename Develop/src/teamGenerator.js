@@ -1,3 +1,5 @@
+// template literal to create manager card
+
 const managerSection = (data) => {
     return `<section class="manager">
     <h1>Manager</h1>

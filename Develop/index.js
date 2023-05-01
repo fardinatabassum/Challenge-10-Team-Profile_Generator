@@ -1,17 +1,17 @@
-// Require inquirer
+// Require inquirer and fs node modules
 const inquirer = require("inquirer");
-
 const fs = require("fs");
 
-// Require claases
+// Require team profile modules
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 
+// import html generator
 const generateHTML = require("./src/teamGenerator");
 
+// prompt to create profiles
 const teamMembers = [];
-
 const addManager = () => {
   return inquirer.prompt([
     {
@@ -35,6 +35,13 @@ const addManager = () => {
       message: "What is the office number of the manager?",
     },
   ])
+
+  .then(managerInput => {
+    const { name, id, email, officeNumber } = managerInput;
+    const manager = new Manager(name, id, email, officeNumber);
+    teamMembers.push(manager);
+    console.log(manager);
+})
   
 };
 
@@ -92,11 +99,31 @@ const addEmployee = () => {
         employee = new Intern(name, id, email, school);
         console.log(employee);
       }
-      teamArray.push(employee);
+      teamMembers.push(employee);
       if (confirmAddEmployee) {
-        return addEmployee(teamArray);
+        return addEmployee(teamMembers);
       } else {
-        return teamArray;
+        return teamMembers;
       }
     });
 };
+
+//writing to HTML page
+const writeFile = data => {
+  fs.writeFile('./dist/index.html', data, err => {
+      console.log(data),
+          err ? console.log(err) : console.log("HTML successfully created.")
+  })
+}
+
+// Add further input
+addManager()
+  .then(addEmployee).then(teamMembers => {
+      return generateHTML(teamMembers);
+  })
+  .then(pageHTML => {
+      return writeFile(pageHTML);
+  })
+  .catch(err => {
+      console.log(err);
+  });
