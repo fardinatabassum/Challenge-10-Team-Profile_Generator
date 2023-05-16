@@ -8,9 +8,9 @@ const managerDiv = function (manager) {
                 <h4>Manager</h4><i class="material-icons">groups</i>
             </div>
             <div class="card-body">
-                <p class="id">ID: ${manager.id}</p>
-                <p class="email">Email: <a href="mailto:${manager.email}">${manager.email}</a></p>
-                <p class="office">Office Number: ${manager.officeNumber}</p>
+                <li class="id list-group-item">ID: ${manager.id}</li>
+                <li class="email list-group-item" >Email: <a href="mailto:${manager.email}">${manager.email}</a></li>
+                <li class="office list-group-item">Office Number: ${manager.officeNumber}</li>
             </div>
         </div>
     </div>`;
@@ -25,9 +25,9 @@ const engineerDiv = function (engineer) {
                 <h4>Engineer</h4><i class="material-icons">engineering</i>
             </div>
             <div class="card-body">
-                <p class="id">ID: ${engineer.id}</p>
-                <p class="email">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></p>
-                <p class="github">Github: <a href="https://github.com/${engineer.github}">${engineer.github}</a></p>
+                <li class="id list-group-item">ID: ${engineer.id}</li>
+                <li class="email list-group-item">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></li>
+                <li class="github list-group-item">Github: <a href="https://github.com/${engineer.github}">${engineer.github}</a></li>
             </div>
         </div>
     </div>`;
@@ -43,9 +43,9 @@ const internDiv = function (intern) {
                 <h4>Intern</h4><i class="material-icons">school</i>
             </div>
             <div class="card-body">
-                <p class="id">ID: ${intern.id}</p>
-                <p class="email">Email:<a href="mailto:${intern.email}">${intern.email}</a></p>
-                <p class="school">School: ${intern.school}</p>
+                <li class="id list-group-item">ID: ${intern.id}</li>
+                <li class="email list-group-item">Email:<a href="mailto:${intern.email}">${intern.email}</a></li>
+                <li class="school list-group-item">School: ${intern.school}</li>
             </div>
     </div>
 </div>`;
@@ -79,21 +79,8 @@ const createHTML = function (data) {
   const generateTeam = generateTeamPage(employeeCards);
   return generateTeam;
 };
-// const managerSection = (data) => {
-//     return `<section class="manager">
-//     <h1>Manager</h1>
-//     <h4>Name: ${data.name}</h4>
-//     <h4>Email: ${data.email}</h4>
-//     <h4>ID: ${data.id}</h4>
-//     <h4>Office Number: ${data.officeNum}</h4>
-// </section>`
-// }
 
-const createContent = () => {
-  // loop through data, if its a manager, call the manageSection function and add it to an array
-  // once done checking values of objects and adding their corresponding html sections(functions)
-  // take that array and return it with array.join('')
-};
+
 
 const generateTeamPage = (employeeCards) => {
   return `<!DOCTYPE html>
@@ -111,7 +98,7 @@ const generateTeamPage = (employeeCards) => {
     </head>
     <body>
     <header>
-    <nav class="navbar bg-danger text-white" id="navbar">
+    <nav class="navbar py-4 bg-danger text-white" id="navbar">
         <span class="navbar-brand mb-0 h1 w-100 text-center" id="navbar-text">My Team</span>
     </nav>
 </header>
