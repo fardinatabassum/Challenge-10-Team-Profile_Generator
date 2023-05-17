@@ -6,7 +6,7 @@ The purpose of creating this Team profile generator is to allow companies to be 
 
 ## Installation
 
-### Link to video demo:
+### Link to video demo: https://drive.google.com/file/d/11pRRQMPxEteY5gQQMA0-k9qB1j-AJp3L/view
 
 On the terminal install the necessary packages using nmp install including inquirer and jest packages. Install the following packages by using the code below.
 
