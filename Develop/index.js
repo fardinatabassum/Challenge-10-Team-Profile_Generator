@@ -79,25 +79,26 @@ const addManager = () => {
     });
 };
 
-const promptMenu = () => {
-  return inquirer
-    .prompt([
-      {
-        type: "list",
-        name: "menu",
-        message: "Please select what you would like to do next",
-        choices: ['add an employee', 'finish building my team'],
-      },
-    ])
-    .then((userInput) => {
-      console.log(userInput)
-      if (userInput.menu === 'add an employee'){
-        addEmployee()
-      }else if (userInput.menu === 'finish building my team'){
-        return(teamMembers)
-      }
-    });
-};
+// additional prompt menu but does not work
+// const promptMenu = () => {
+//   return inquirer
+//     .prompt([
+//       {
+//         type: "list",
+//         name: "menu",
+//         message: "Please select what you would like to do next",
+//         choices: ['add an employee', 'finish building my team'],
+//       },
+//     ])
+//     .then((userInput) => {
+//       console.log(userInput)
+//       if (userInput.menu === 'add an employee'){
+//         addEmployee()
+//       }else if (userInput.menu === 'finish building my team'){
+//         return(teamMembers)
+//       }
+//     });
+// };
 
 const addEmployee = () => {
   return inquirer
@@ -176,7 +177,7 @@ const addEmployee = () => {
   
   // Add further input
   addManager()
-  .then(promptMenu)
+  // .then(promptMenu)
   .then(addEmployee)
   .then((teamMembers) => {
       console.log("Team has been built");
