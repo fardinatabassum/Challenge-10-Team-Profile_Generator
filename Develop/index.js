@@ -9,7 +9,7 @@ const Manager = require("./lib/Manager");
 
 // import html generator
 const createHTML = require("./src/teamGenerator");
-// const { userInfo } = require("os");
+
 
 // prompt to create profiles
 const teamMembers = [];
@@ -74,37 +74,30 @@ const addManager = () => {
       const { name, id, email, officeNumber } = managerInput;
       const manager = new Manager(name, id, email, officeNumber);
       teamMembers.push(manager);
+      console.log("Manager has been added to the team");
       console.log(manager);
-      // promptMenu();
     });
 };
 
-// const promptMenu = () => {
-//   return inquirer
-//     .prompt([
-//       {
-//         type: "list",
-//         name: "menu",
-//         message: "Please select what you would like to do next",
-//         choices: ['add an employee', 'finish building my team'],
-//       },
-//     ])
-//     .then((userInput) => {
-//       console.log(userInput)
-//       if (userInput.menu === 'add an employee'){
-//         addEmployee()
-//       }else{
-//         buildTeam()
-//       }
-//       // switch (userInput.menu) {
-//       //   case "add an employee":
-//       //     addEmployee();
-//       //     break;
-//       //   case "finish building my team":
-//       //     break;
-//       // }
-//     });
-// };
+const promptMenu = () => {
+  return inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "menu",
+        message: "Please select what you would like to do next",
+        choices: ['add an employee', 'finish building my team'],
+      },
+    ])
+    .then((userInput) => {
+      console.log(userInput)
+      if (userInput.menu === 'add an employee'){
+        addEmployee()
+      }else if (userInput.menu === 'finish building my team'){
+        return(teamMembers)
+      }
+    });
+};
 
 const addEmployee = () => {
   return inquirer
@@ -155,9 +148,11 @@ const addEmployee = () => {
       let employee;
       if (role === "Engineer") {
         employee = new Engineer(name, id, email, github);
+        console.log("Employee has been added to the team!");
         console.log(employee);
       } else if (role === "Intern") {
         employee = new Intern(name, id, email, school);
+        console.log("Employee has been added to the team!");
         console.log(employee);
       }
       teamMembers.push(employee);
@@ -169,85 +164,22 @@ const addEmployee = () => {
     });
 };
 
-// const addIntern = () => {
-//   return inquirer.prompt([
-//     {
-//       type: "input",
-//       name: "name",
-//       message: "What is the name of the interm?",
-//       validate: internName => {
-//         if (internName) {
-//           return true;
-//         } else {
-//           console.log('Please enter name!');
-//           return false;
-//         }
-//       }
-//     },
-//     {
-//       type: "input",
-//       name: "id",
-//       message: "What is the id of the intern?",
-//       validate: idInput => {
-//         if (idInput) {
-//           return true;
-//         } else {
-//           console.log('Please enter ID!');
-//           return false;
-//         }
-//       }
-//     },
-//     {
-//       type: "input",
-//       name: "email",
-//       message: "What is the email of the intern?",
-//       validate: emailInput => {
-//         if (emailInput) {
-//           return true;
-//         } else {
-//           console.log('Please enter email!');
-//           return false;
-//         }
-//       }
-//     },
-//     {
-//       type: "input",
-//       name: "school",
-//       message: "What is the intern's school?",
-//       validate: schoolInput => {
-//         if (schoolInput) {
-//           return true;
-//         } else {
-//           console.log('Please enter the school name!');
-//           return false;
-//         }
-//       }
-//     },
-//   ])
-//   .then(managerInput => {
-//     const { name, id, email, school } = internInput;
-//     const intern = new Intern (name, id, email, school);
-//     teamMembers.push(intern);
-//     console.log(manager);
-//     promptMenu();
-// })
 
-// const buildTeam = () => {
-//   console.log("Team has been built");
-// };
-
-//writing to HTML page
-const writeFile = (data) => {
-  fs.writeFile("./dist/index.html", data, (err) => {
-    console.log(data),
+  
+  //writing to HTML page
+  const writeFile = (data) => {
+    fs.writeFile("./dist/index.html", data, (err) => {
+      console.log(data),
       err ? console.log(err) : console.log("HTML successfully created.");
-  });
-};
-
-// Add further input
-addManager()
+    });
+  };
+  
+  // Add further input
+  addManager()
+  .then(promptMenu)
   .then(addEmployee)
   .then((teamMembers) => {
+      console.log("Team has been built");
     return createHTML(teamMembers);
   })
   .then((HTMLpage) => {
@@ -256,3 +188,4 @@ addManager()
   .catch((err) => {
     console.log(err);
   });
+
