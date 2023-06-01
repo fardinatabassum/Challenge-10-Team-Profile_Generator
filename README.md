@@ -24,7 +24,7 @@ Users can then start filling out the prompts using their keybpard and arrows whe
 
 ## Usage
 
-![Challenge-10-Team-Profile_Generator](./Develop/images/team-profile%20generator-screenshot.png)
+![Challenge-10-Team-Profile_Generator](./images/team-profile%20generator-screenshot.png)
 
 The images folder contains a screenshot of the generated html page with all the team members information. The index.js file contains the code used to create the prompts and the team generator.js files contains the code used to create the template for the team memebr cards and to generate the html page. The test folder conatains various tests to test for the fucntionality of the various member models. The dist folder will contain the generated html page.
 
