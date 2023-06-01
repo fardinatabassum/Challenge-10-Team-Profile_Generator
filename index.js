@@ -8,7 +8,8 @@ const Intern = require("./lib/Intern");
 const Manager = require("./lib/Manager");
 
 // import html generator
-// const { userInfo } = require("os");
+const createHTML = require("./src/teamGenerator");
+
 
 // prompt to create profiles
 const teamMembers = [];
@@ -73,31 +74,31 @@ const addManager = () => {
       const { name, id, email, officeNumber } = managerInput;
       const manager = new Manager(name, id, email, officeNumber);
       teamMembers.push(manager);
+      console.log("Manager has been added to the team");
       console.log(manager);
-      // promptMenu();
     });
 };
 
-const promptMenu = () => {
-  return inquirer
-    .prompt([
-      {
-        type: "list",
-        name: "menu",
-        message: "Please select what you would like to do next",
-        choices: ["add an employee", "finish building my team"],
-      },
-    ])
-    .then((userInput) => {
-      console.log(userInput);
-      if (userInput.menu === "add an employee") {
-        addEmployee();
-      } else if (userInput.menu === "finish building my team") {
-        console.log("Team has been built");
-        finish(teamMembers);
-      }
-    });
-};
+// additional prompt menu but does not work
+// const promptMenu = () => {
+//   return inquirer
+//     .prompt([
+//       {
+//         type: "list",
+//         name: "menu",
+//         message: "Please select what you would like to do next",
+//         choices: ['add an employee', 'finish building my team'],
+//       },
+//     ])
+//     .then((userInput) => {
+//       console.log(userInput)
+//       if (userInput.menu === 'add an employee'){
+//         addEmployee()
+//       }else if (userInput.menu === 'finish building my team'){
+//         return(teamMembers)
+//       }
+//     });
+// };
 
 const addEmployee = () => {
   return inquirer
@@ -148,39 +149,43 @@ const addEmployee = () => {
       let employee;
       if (role === "Engineer") {
         employee = new Engineer(name, id, email, github);
+        console.log("Employee has been added to the team!");
         console.log(employee);
       } else if (role === "Intern") {
         employee = new Intern(name, id, email, school);
+        console.log("Employee has been added to the team!");
         console.log(employee);
       }
       teamMembers.push(employee);
       if (confirmAddEmployee) {
         return addEmployee();
       } else {
-        finish(teamMembers);
+        return teamMembers;
       }
     });
 };
 
-//writing to HTML page
-const writeFile = (data) => {
-  fs.writeFile("./dist/index.html", data, (err) => {
-    console.log(data),
+
+  
+  //writing to HTML page
+  const writeFile = (data) => {
+    fs.writeFile("./dist/index.html", data, (err) => {
+      console.log(data),
       err ? console.log(err) : console.log("HTML successfully created.");
-  });
-};
-const createHTML = require("./src/teamGenerator");
-
-const finish = (teamMembers) => {
-  return createHTML(teamMembers)
-    .then((HTMLpage) => {
-      return writeFile(HTMLpage);
-    })
-    .catch((err) => {
-      console.log(err);
     });
-};
-
-// Add further input
-
-addManager().then(promptMenu);
+  };
+  
+  // Add further input
+  addManager()
+  // .then(promptMenu)
+  .then(addEmployee)
+  .then((teamMembers) => {
+      console.log("Team has been built");
+    return createHTML(teamMembers);
+  })
+  .then((HTMLpage) => {
+    return writeFile(HTMLpage);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
