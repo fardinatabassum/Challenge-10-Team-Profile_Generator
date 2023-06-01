@@ -52,7 +52,8 @@ const internDiv = function (intern) {
 };
 
 const createHTML = function (data) {
-  sectionArray = [];
+  let sectionArray = [];
+
   for (let i = 0; i < data.length; i++) {
     const employee = data[i];
     const role = employee.getRole();
